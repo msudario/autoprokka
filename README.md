@@ -1,4 +1,4 @@
-# autoprokka is a script that runs prokka for each file in a input
+# autoprokka is a script that runs prokka for each file in folder input
 simple run python path/to/script.py -h for the options and go grab a coffe
 options:
   -h, --help       show this help message and exit
