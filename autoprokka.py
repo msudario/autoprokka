@@ -38,7 +38,10 @@ for i in glob.glob(os.path.join(folder_input, f'*.{args.format}')):
             with open(i, "r") as file:
                 sp_name = []
                 first_line = file.readline().split()
-                sp_name = first_line[2]
+                if len(first_line) > 2:
+                    sp_name = first_line[2]
+                else:
+                    sp_name = first_line[0]
             command_line = ['prokka', '--outdir', f'{args.outdir}/results_prokka_{nome_vf}', '--genus',
                             f'{args.genus}', '--prefix', f'{nome_vf}', '--locustag', f'{args.genus[0]}{sp_name[0]}{nome_vf}', f'{args.input}/{nome_vf}.{args.format}']
 
