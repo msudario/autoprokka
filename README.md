@@ -1,5 +1,5 @@
 # autoprokka is a script that runs prokka for each file in folder input
-it gives as the locustag name the first genus uppercase letter + first letter of species lowercase + the strain name, save the file in a new folder named results_prokka_strainname
+it gives as the locustag name the first genus uppercase letter + first letter of species lowercase + the file name, save the file in a new folder named results_prokka_strainname
 simple run python path/to/script.py -h for the options and go grab a coffe
 options:
   -h, --help       show this help message and exit
