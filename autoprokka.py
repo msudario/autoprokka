@@ -1,52 +1,68 @@
 #!/usr/bin/env python3
+# coding: utf-8
 
 import os
-import glob
 import subprocess
 import argparse
 
 
 parser = argparse.ArgumentParser(
     description='running autoPROKKA')
-parser.add_argument('-f', '--format', metavar='', type=str, required=True,
-                    help='Valid PROKKA format i.e: fasta, fna')
-parser.add_argument('-o', '--outdir', metavar='', type=str, required=True,
-                    help='outdir i.e home/usr/Desktop')
+
+
 parser.add_argument('-g', '--genus', metavar='', type=str, required=True,
                     help='the genus of the species i.e: Dickeya')
 parser.add_argument('-i', '--input', metavar='', type=str, required=True,
                     help='path to the files i.e: home/usr/Desktop/myfiles')
-parser.add_argument('-s', '--species', metavar='', type=str, required=False,
-                    help='species i.e: dadantii')
+
 
 
 args = parser.parse_args()
 
-folder_input = f'{args.input}'
+folder_input = os.path.expanduser(f'{args.input}') 
+genus = f'{args.genus}'
 
-for i in glob.glob(os.path.join(folder_input, f'*.{args.format}')):
-    if args.format in ['fna', 'faa', 'fasta']:
-        nome_do_arquivo = []
-        os.chdir(f'{args.input}')
-        nome_do_arquivo = i.split('/')
-        nome_final = nome_do_arquivo[-1].split(f'{args.format}')
-        nome_vf = nome_final[0].replace('.', '')
 
-        if args.species:
+# folder_input = '/home/mateus/Desktop/teste'
+# genus = 'Dickeya'
 
-            command_line = ['prokka', '--outdir', f'{args.outdir}/results_prokka_{nome_vf}', '--genus', f'{args.genus}',
-                            '--species', f'{args.species}', '--prefix', f'{nome_vf}', '--locustag', f'{args.genus[0]}{sp_name[0]}{nome_vf}', f'{args.input}/{nome_vf}.{args.format}']
-        else:
-            with open(i, "r") as file:
-                sp_name = []
-                first_line = file.readline().split()
-                if len(first_line) > 2:
-                    sp_name = first_line[2]
-                else:
-                    sp_name = first_line[0]
-            command_line = ['prokka', '--outdir', f'{args.outdir}/results_prokka_{nome_vf}', '--genus',
-                            f'{args.genus}', '--prefix', f'{nome_vf}', '--locustag', f'{args.genus[0]}{sp_name[0]}{nome_vf}', f'{args.input}/{nome_vf}.{args.format}']
+extensoes = ['.fna', '.faa', '.fasta']
 
-        subprocess.call(command_line)
-    else:
-        print('Please enter a valid format (faa, fasta, fna)')
+def run_prokka(folder_input): 
+    os.chdir(folder_input)
+
+    caminho_nova_pasta = os.path.join(folder_input, 'results_autoprokka')
+
+    for arquivos in os.listdir(folder_input):
+        for extensao in extensoes:
+            if arquivos.endswith(extensao): 
+                with open(os.path.join(folder_input, arquivos), "r") as file:
+                    first_line = file.readline().split()
+                    if 'coverage' in first_line:
+                            locus_tag = arquivos.replace(">","").replace("(", "").replace(")", "").replace(";","").replace(",","").replace("/","").replace("|","").replace("\\","").replace("[","").replace("]","").replace('.','').replace('-', '').replace('fasta', '').replace('fna', '').replace('faa', '')
+                            print(f"could not find the {arquivos} species/strain's names, changed to file's name")
+                    else: 
+                            locus_tag = first_line[1][0] + first_line[2]
+                    pastas = arquivos.replace(">","").replace("(", "").replace(")", "").replace(";","").replace(",","").replace("/","").replace("|","").replace("\\","").replace("[","").replace("]","").replace('.','').replace('-', '').replace('fasta', '').replace('fna', '').replace('faa', '')
+                    command_line = ['prokka', '--outdir', os.path.join(caminho_nova_pasta, f'{pastas}'), '--genus',
+                            f'{genus}', '--prefix', f'{locus_tag}', '--locustag', f'{locus_tag}', f'{arquivos}']
+        
+                    subprocess.call(command_line)
+      
+
+def criar_pasta(folder_input) :
+    os.chdir(folder_input)
+
+    if 'results_autoprokka' not in os.listdir():
+        os.mkdir('results_autoprokka')  
+    else: 
+        print('Error - results_autoprokka already exists') 
+        return 
+
+    
+def processar_arquivos(folder_input):
+    criar_pasta(folder_input)
+    run_prokka(folder_input)
+
+if __name__ == '__main__':
+    processar_arquivos(folder_input)
