@@ -5,7 +5,7 @@ Simple run in your terminal: python path/to/script.py       with the options and
 options:<p>
   -h, --help       show this help message and exit<p>
   -g , --genus     the genus of the species i.e: Dickeya<p>
-  -i , --input     path to the fasta files i.e: home/usr/Desktop/folder_with_your_files or ~/Desktop/folder_with_your_files<p>
+  -i , --input     path to the fasta files i.e: <code>home/usr/Desktop/folder_with_your_files or ~/Desktop/folder_with_your_files<code><p>
 
 Exemple of running it: <code>python ~/Desktop/scripts/autoprokka/autoprokka.py -g Klebsiella -i ~/Desktop/teste<code>
 
