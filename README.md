@@ -1,10 +1,15 @@
-# autoprokka is a script that runs prokka for each file in folder input
-it gives as the locustag name the first genus uppercase letter + first letter of species lowercase + the file name, save the file in a new folder named results_prokka_strainname
-simple run python path/to/script.py -h for the options and go grab a coffe
-options:
-  -h, --help       show this help message and exit
-  -f , --format    Valid PROKKA format i.e: fasta, fna
-  -o , --outdir    outdir i.e home/usr/Desktop
-  -g , --genus     the genus of the species i.e: Dickeya
-  -i , --input     path to the fasta files i.e: home/usr/Desktop/myfiles (do not finish with '/')
-  [-s] , --species   species i.e: dadantii (it's not mandatory, particularry I do not recomment using species at all)
+# Autoprokka is a script that runs prokka command line for each file in folder input. 
+
+It gives as the locustag name as the first genus uppercase letter + the species name, save the file in a new folder named results_prokka in the same direcctory as the input.<p>
+Simple run in your terminal: python path/to/script.py       with the options and go grab a coffe<p>
+options:<p>
+  -h, --help       show this help message and exit<p>
+  -g , --genus     the genus of the species i.e: Dickeya<p>
+  -i , --input     path to the fasta files i.e: home/usr/Desktop/folder_with_your_files or ~/Desktop/folder_with_your_files<p>
+
+Exemple of running it: <code>python ~/Desktop/scripts/autoprokka/autoprokka.py -g Klebsiella -i ~/Desktop/teste<code>
+
+
+
+** In the case that the informations are not present in the fasta file, it gives the name of the file as the locus tag
+** Must run it in terminal/enviroment with prokka installed
