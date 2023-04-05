@@ -1,4 +1,5 @@
-# Autoprokka is a script that runs prokka command line for each file in folder input. 
+# Welcome to autoprokka
+autoprokka is a script that runs prokka command line for each file in folder input. 
 
 It gives as the locustag name as the first genus uppercase letter + the species name, save the file in a new folder named results_prokka in the same direcctory as the input.<p>
 Simple run in your terminal: <code>python path/to/script.py</code>     with the options and go grab a coffe <p>
