@@ -22,10 +22,6 @@ args = parser.parse_args()
 folder_input = os.path.expanduser(f'{args.input}') 
 genus = f'{args.genus}'
 
-
-# folder_input = '/home/mateus/Desktop/teste'
-# genus = 'Dickeya'
-
 extensoes = ['.fna', '.faa', '.fasta']
 
 def run_prokka(folder_input): 
@@ -63,7 +59,7 @@ def run_prokka(folder_input):
                             subprocess.call(command_line)
       
 
-def criar_pasta(folder_input) :
+def make_dir(folder_input) :
     os.chdir(folder_input)
 
     if 'results_autoprokka' not in os.listdir():
@@ -73,9 +69,9 @@ def criar_pasta(folder_input) :
         return 
 
     
-def processar_arquivos(folder_input):
-    criar_pasta(folder_input)
+def process_files(folder_input):
+    make_dir(folder_input)
     run_prokka(folder_input)
 
 if __name__ == '__main__':
-    processar_arquivos(folder_input)
+    process_files(folder_input)
