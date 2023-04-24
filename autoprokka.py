@@ -33,7 +33,7 @@ def run_prokka(folder_input):
 
                     if len(first_line) > 2:        
                         if first_line[3] != 'strain':
-                                if first_line[4] is not 'chromosome' is not first_line[4] != 'contig' is not first_line[4] != 'complete':
+                                if first_line[4] is not 'chromosome' or first_line[4] is not 'contig' or first_line[4] is not 'complete' or first_line[4] is not 'contig1':
                                     strain = first_line[3].replace(">","").replace("(", "").replace(")", "").replace(";","").replace(",","").replace("/","").replace("|","").replace("\\","").replace("[","").replace("]","").replace('.','').replace('-', '').replace('fasta', '').replace('fna', '').replace('faa', '') + first_line[4].replace(">","").replace("(", "").replace(")", "").replace(";","").replace(",","").replace("/","").replace("|","").replace("\\","").replace("[","").replace("]","").replace('.','').replace('-', '').replace('fasta', '').replace('fna', '').replace('faa', '')
                                     locus_tag = first_line[1][0] + first_line[2][0] + first_line[2][1]
                                     command_line = ['prokka', '--outdir', os.path.join(caminho_nova_pasta, f'{locus_tag}_{strain}'), '--genus',
@@ -50,7 +50,7 @@ def run_prokka(folder_input):
                                     subprocess.call(command_line)
 
                         elif first_line[3] == 'strain':
-                                if first_line[5] is not 'chromosome' or first_line[5] is not 'contig' or first_line[5] is not 'complete':
+                                if first_line[5] is not 'chromosome' or first_line[5] is not 'contig' or first_line[5] is not 'complete' or first_line[5] is not 'contig1':
                                     strain = first_line[4].replace(">","").replace("(", "").replace(")", "").replace(";","").replace(",","").replace("/","").replace("|","").replace("\\","").replace("[","").replace("]","").replace('.','').replace('-', '').replace('fasta', '').replace('fna', '').replace('faa', '') + first_line[5].replace(">","").replace("(", "").replace(")", "").replace(";","").replace(",","").replace("/","").replace("|","").replace("\\","").replace("[","").replace("]","").replace('.','').replace('-', '').replace('fasta', '').replace('fna', '').replace('faa', '')
                                     locus_tag = first_line[1][0] + first_line[2][0] + first_line[2][1]
                                     command_line = ['prokka', '--outdir', os.path.join(caminho_nova_pasta, f'{locus_tag}_{strain}'), '--genus',
@@ -96,4 +96,6 @@ def processar_arquivos(folder_input):
     
 if __name__ == '__main__':
     processar_arquivos(folder_input)
+
+
 
