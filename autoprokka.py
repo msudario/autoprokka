@@ -32,27 +32,41 @@ def run_prokka(folder_input):
                     first_line = file.readline().split()
 
                     if len(first_line) > 2:        
-                        if first_line[5] == 'chromosome' or first_line[5] == 'contig' or first_line[5] == 'complete':
+                        if first_line[4] == 'chromosome' or first_line[4] == 'contig' or first_line[4] == 'complete':
                                 strain = first_line[3].replace(">","").replace("(", "").replace(")", "").replace(";","").replace(",","").replace("/","").replace("|","").replace("\\","").replace("[","").replace("]","").replace('.','').replace('-', '').replace('fasta', '').replace('fna', '').replace('faa', '')
                                 locus_tag = first_line[1][0] + first_line[2][0] + first_line[2][1]
                                 command_line = ['prokka', '--outdir', os.path.join(caminho_nova_pasta, f'{locus_tag}_{strain}'), '--genus',
                                 f'{genus}', '--prefix', f'{locus_tag}_{strain}', '--locustag', f'{locus_tag}_{strain}', f'{arquivos}']
             
                                 subprocess.call(command_line)
-                        else: 
+                        elif first_line[3] == 'strain':
                                 strain = first_line[4].replace(">","").replace("(", "").replace(")", "").replace(";","").replace(",","").replace("/","").replace("|","").replace("\\","").replace("[","").replace("]","").replace('.','').replace('-', '').replace('fasta', '').replace('fna', '').replace('faa', '')
                                 locus_tag = first_line[1][0] + first_line[2][0] + first_line[2][1]
                                 command_line = ['prokka', '--outdir', os.path.join(caminho_nova_pasta, f'{locus_tag}_{strain}'), '--genus',
                                 f'{genus}', '--prefix', f'{locus_tag}_{strain}', '--locustag', f'{locus_tag}_{strain}', f'{arquivos}']
    
                                 subprocess.call(command_line)
+                        else:
+                                strain = first_line[3].replace(">","").replace("(", "").replace(")", "").replace(";","").replace(",","").replace("/","").replace("|","").replace("\\","").replace("[","").replace("]","").replace('.','').replace('-', '').replace('fasta', '').replace('fna', '').replace('faa', '')
+                                locus_tag = first_line[1][0] + first_line[2][0] + first_line[2][1]
+                                command_line = ['prokka', '--outdir', os.path.join(caminho_nova_pasta, f'{locus_tag}_{strain}'), '--genus',
+                                f'{genus}', '--prefix', f'{locus_tag}_{strain}', '--locustag', f'{locus_tag}_{strain}', f'{arquivos}']
+   
                     else:
-                        print(f'the file {arquivos} has no information about its locus tag, please type the locus tag you would like prokka to annotate') 
-                        locus_tag = input('Type your locus tag:')
-                        strain = arquivos.replace(">","").replace("(", "").replace(")", "").replace(";","").replace(",","").replace("/","").replace("|","").replace("\\","").replace("[","").replace("]","").replace('.','').replace('-', '').replace('fasta', '').replace('fna', '').replace('faa', '')
-                        command_line = ['prokka', '--outdir', os.path.join(caminho_nova_pasta, f'{strain}'), '--genus',
-                        f'{genus}', '--prefix', f'{locus_tag}', '--locustag', f'{locus_tag}', f'{arquivos}']
-                        subprocess.call(command_line)
+                        while True:
+                            print(f'the file {arquivos} has no information about its locus tag, please type the locus tag you would like prokka to annotate') 
+                            locus_tag = input('Type your locus tag:')
+                            ask = input(f' Your locus_tag name is {locus_tag} Are you sure? (y/n): ')
+                            if ask == 'y'.lower():
+                                strain = arquivos.replace(">","").replace("(", "").replace(")", "").replace(";","").replace(",","").replace("/","").replace("|","").replace("\\","").replace("[","").replace("]","").replace('.','').replace('-', '').replace('fasta', '').replace('fna', '').replace('faa', '')
+                                command_line = ['prokka', '--outdir', os.path.join(caminho_nova_pasta, f'{strain}'), '--genus',
+                                f'{genus}', '--prefix', f'{locus_tag}', '--locustag', f'{locus_tag}', f'{arquivos}']
+                                subprocess.call(command_line)
+                                break
+                            elif ask == 'n'.lower():
+                                 continue
+                            else: print('Please enter a valid answer (y/n)')
+                            
 
 def criar_pasta(folder_input) :
     os.chdir(folder_input)
@@ -67,4 +81,8 @@ def processar_arquivos(folder_input):
     
 if __name__ == '__main__':
     processar_arquivos(folder_input)
+
+
+
+
 
