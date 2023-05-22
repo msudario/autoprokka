@@ -30,7 +30,7 @@ def run_prokka(folder_input):
             if arquivos.endswith(extensao): 
                 with open(os.path.join(folder_input, arquivos), "r") as file:
                     first_line = file.readline().split()
-                    passes = ['chromosome', 'contig', 'complete', 'contig1', 'chromosome,', 'contig,', 'complete,', 'contig_1,']
+                    passes = ['chromosome', 'contig', 'complete', 'contig1', 'chromosome,', 'contig,', 'complete,', 'contig_1,', 'contig_1,']
                     if len(first_line) > 2:        
                         if first_line[3].lower() != 'strain':
                                 if first_line[4].lower() not in passes:
