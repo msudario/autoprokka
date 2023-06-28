@@ -34,7 +34,7 @@ def run_prokka(folder_input):
                 with open(os.path.join(folder_input, arquivos), "r") as file:
                     first_line = file.readline().split()         
                     passes = ['chromosome', 'contig', 'complete', 'contig1', 'chromosome,', 'contig,', 'complete,', 'contig1,', 'contig_1', 'contig_1,']      
-                    if len(first_line > 2):
+                    if len(first_line > 4):
                         if first_line[3].lower() != 'strain' or first_line[4].lower() != 'strain':
                             strain = os.path.splitext(arquivos)[0]
                             command_line = ['prokka', '--outdir', os.path.join(caminho_nova_pasta, f'{strain}'), '--genus',
